@@ -25,6 +25,9 @@ public class Competition {
     @Temporal(TemporalType.DATE)
     private LocalDate date;
     @NotNull
+    @Temporal(TemporalType.DATE)
+    private LocalDate endDate;
+    @NotNull
     @Temporal(TemporalType.TIME)
     private LocalTime startTime;
     @NotNull

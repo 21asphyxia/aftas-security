@@ -8,6 +8,7 @@ import java.util.List;
 
 @Builder
 public record MemberResponseDto(
+        String email,
         Integer num,
         String full_name,
         LocalDate accession_date,

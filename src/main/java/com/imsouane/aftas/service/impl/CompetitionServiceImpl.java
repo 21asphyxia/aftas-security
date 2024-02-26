@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -24,9 +25,12 @@ public class CompetitionServiceImpl implements CompetitionService {
 
     @Override
     public Competition save(Competition competition) {
-        competitionRepository.findByDate(competition.getDate()).ifPresent((c) -> {
-            throw new CompetitionCreationException("Competition already exists with date: " + competition.getDate());
-        });
+//        competitionRepository.findByDate(competition.getDate()).ifPresent((c) -> {
+//            throw new CompetitionCreationException("Competition already exists with date: " + competition.getDate());
+//        });
+        competition.setEndDate(competition.getDate().plusDays(1));
+        competition.setStartTime(LocalTime.of(8,0));
+        competition.setEndTime(LocalTime.of(18,0));
         competition.setCode(generateCode(competition.getLocation().toLowerCase(), competition.getDate()));
         return competitionRepository.save(competition);
     }
