@@ -16,9 +16,4 @@ export const navItems: INavData[] = [
     url: '/participations',
     iconComponent: { name: 'cil-people' },
   },
-  {
-    name: 'Logout',
-    url: '/login',
-    iconComponent: { name: 'cil-user' },
-  },
 ];

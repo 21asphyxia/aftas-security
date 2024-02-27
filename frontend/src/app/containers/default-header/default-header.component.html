@@ -2,6 +2,7 @@
     <button toggle="visible" cHeaderToggler [cSidebarToggle]="sidebarId" class="ps-1">
         <svg cIcon name="cilMenu" size="lg"></svg>
     </button>
+    <button (click)="logout()" cButton color="danger" class="ms-auto">Logout</button>
 </c-container>
 <c-header-divider></c-header-divider>
 <c-container [fluid]="true">
