@@ -1,0 +1,16 @@
+<div class="bg-dark vh-100 w-100 d-flex justify-content-center">
+  <div class="w-50 m-auto">
+    <form cForm (ngSubmit)="onSubmit()" #f="ngForm">
+      <div class="mb-3">
+        <label cLabel for="inputEmail-1">Email address</label>
+        <input cFormControl id="inputEmail-1" type="email" #email="ngModel" [(ngModel)]="form.email" name="email">
+      </div>
+      <div class="mb-3">
+        <label cLabel for="inputPassword-1">Password</label>
+        <input cFormControl id="inputPassword-1" type="password" #password="ngModel" [(ngModel)]="form.password"
+          name="password">
+      </div>
+      <input cButton color="primary" type="submit">
+    </form>
+  </div>
+</div>

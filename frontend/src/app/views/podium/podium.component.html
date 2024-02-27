@@ -1,0 +1,33 @@
+<c-col xs="12">
+    <c-card class="mb-4">
+        <c-card-body>
+            <div>
+                <table cTable>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Member Number</th>
+                            <th>Full Name</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (ranking of rankings; track $index) {
+                        <tr>
+                            <td>{{ranking.rank}}</td>
+                            <td>{{ranking.member_number}}</td>
+                            <td>{{ranking.member_fullName}}</td>
+                            <td>{{ranking.score}}</td>
+                        </tr>
+                        }
+                        @empty {
+                        <tr>
+                            <td colspan="6">No members found</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </c-card-body>
+    </c-card>
+</c-col>

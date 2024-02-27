@@ -1,0 +1,87 @@
+<c-col xs="12">
+    <c-card class="mb-4">
+        <c-card-body>
+            <button [cModalToggle]="competitionModal.id" cButton>Add competition</button>
+            <div>
+                <table cTable>
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Date</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Location</th>
+                            <th>Number of participants</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (competition of competitions; track $index) {
+                        <tr>
+                            <td>{{competition.code}}</td>
+                            <td>{{competition.date}}</td>
+                            <td>{{competition.startTime}}</td>
+                            <td>{{competition.endTime}}</td>
+                            <td>{{competition.location}}</td>
+                            <td>{{competition.numberOfParticipants}}</td>
+                            <td>
+                                <!-- <span *ngIf="competition.status === 'OPEN'" class="badge bg-success">Open</span>
+                                <span *ngIf="competition.status === 'CLOSED'" class="badge bg-danger">Closed</span> -->
+                            <td>
+                                <a routerLink="{{ competition.code }}" cButton color="primary">Register</a>
+                                <a routerLink="{{'/podium/' + competition.code }}" cButton color="success">Podium</a>
+                            </td>
+                        </tr>
+                        }
+                        @empty {
+                        <tr>
+                            <td colspan="6">No competitions found</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </c-card-body>
+        <app-pagination [page]="page" [size]="size" [count]="count_competitions"
+            (pageChange)="getCompetitions($event)"></app-pagination>
+    </c-card>
+</c-col>
+
+<c-modal #competitionModal alignment="center" id="competitionModal" scrollable>
+    <form cForm #competitionForm="ngForm" (ngSubmit)="onSubmit(competitionForm)">
+        <c-modal-header>
+            <h5 cModalTitle>Modal title</h5>
+            <button [cModalToggle]="competitionModal.id" cButtonClose></button>
+        </c-modal-header>
+        <c-modal-body>
+            <div [cFormFloating]="true" class="mb-3">
+                <input cFormControl id="date" type="date" ngModel name="date" required />
+                <label cLabel for="date">Start Date</label>
+            </div>
+            <div [cFormFloating]="true" class="mb-3">
+                <input cFormControl id="start-time" ngModel name="startTime" type="time" />
+                <label cLabel for="start-time">Start Time</label>
+            </div>
+            <div [cFormFloating]="true" class="mb-3">
+                <input cFormControl id="end-time" ngModel name="endTime" type="time" />
+                <label cLabel for="end-time">End Time</label>
+            </div>
+            <div [cFormFloating]="true" class="mb-3">
+                <input cFormControl id="participants" ngModel name="numberOfParticipants" placeholder="Number"
+                    type="number" min="2" />
+                <label cLabel for="participants">Number of participants</label>
+            </div>
+            <div [cFormFloating]="true" class="mb-3">
+                <input cFormControl id="location" ngModel name="location" placeholder="Location" type="text" />
+                <label cLabel for="location">Location</label>
+            </div>
+        </c-modal-body>
+        <c-modal-footer>
+            <button #closeModal [cModalToggle]="competitionModal.id" cButton color="secondary">
+                Close
+            </button>
+            <button cButton color="primary" type="submit">Create</button>
+        </c-modal-footer>
+    </form>
+</c-modal>

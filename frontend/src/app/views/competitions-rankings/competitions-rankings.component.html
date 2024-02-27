@@ -1,0 +1,90 @@
+<c-col xs="12">
+    <c-card class="mb-4">
+        <c-card-body>
+            <button [cModalToggle]="registerModal.id" cButton>Register Member</button>
+            <div>
+                <table cTable>
+                    <thead>
+                        <tr>
+                            <th>Member Number</th>
+                            <th>Full Name</th>
+                            <th>Rank</th>
+                            <th>Points</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (ranking of rankings; track $index) {
+                        <tr>
+                            <td>{{ranking.member_number}}</td>
+                            <td>{{ranking.member_fullName}}</td>
+                            <td>{{ranking.rank}}</td>
+                            <td>{{ranking.score}}</td>
+                            <td>
+                                <button cButton color="primary" [cModalToggle]="huntModal.id"
+                                    (click)="setHuntId(ranking.member_number)">Add Hunt</button>
+                            </td>
+                        </tr>
+                        }
+                        @empty {
+                        <tr>
+                            <td colspan="6">No members found</td>
+                        </tr>
+                        }
+                </table>
+            </div>
+        </c-card-body>
+    </c-card>
+</c-col>
+
+<c-modal #registerModal alignment="center" id="registerModal" scrollable>
+    <form cForm #competitionForm="ngForm" (ngSubmit)="onSubmit(competitionForm)">
+        <c-modal-header>
+            <h5 cModalTitle>Modal title</h5>
+            <button [cModalToggle]="registerModal.id" #closeModal cButtonClose></button>
+        </c-modal-header>
+        <c-modal-body>
+            <select name="member_number" cSelect ngModel required>
+                <option value="" selected>Choose member</option>
+                @for (member of members; track $index) {
+                <option value="{{member.num}}">{{member.full_name}}</option>
+                }
+            </select>
+        </c-modal-body>
+        <c-modal-footer>
+            <button [cModalToggle]="registerModal.id" cButton color="secondary">
+                Close
+            </button>
+            <button cButton color="primary" type="submit">Create</button>
+        </c-modal-footer>
+    </form>
+</c-modal>
+
+<c-modal #huntModal alignment="center" id="huntModal" scrollable>
+    <form cForm #hunt="ngForm" (ngSubmit)="onSubmitHunt(hunt)">
+        <c-modal-header>
+            <h5 cModalTitle>Modal title</h5>
+            <button [cModalToggle]="huntModal.id" #closeHuntModal cButtonClose></button>
+        </c-modal-header>
+        <c-modal-body>
+            <input hidden name="memberNum" ngModel [(ngModel)]="member_id" />
+            <select name="fishId" class="mb-3" id='fishId' cSelect ngModel required>
+                <option value="" selected>Choose fish</option>
+                @for (fish of fishes; track $index) {
+                <option value="{{fish.id}}">{{fish.name}}</option>
+                }
+
+            </select>
+            <div [cFormFloating]="true" class="mb-3">
+                <input cFormControl id="weight" ngModel name="weight" placeholder="Weight" type="number" min="0" />
+                <label cLabel for="weight">Weight</label>
+            </div>
+        </c-modal-body>
+        <c-modal-footer>
+            <button [cModalToggle]="registerModal.id" cButton color="secondary">
+                Close
+            </button>
+            <button cButton color="primary" type="submit">Create</button>
+        </c-modal-footer>
+    </form>
+</c-modal>
