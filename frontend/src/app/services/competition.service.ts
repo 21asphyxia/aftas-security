@@ -11,8 +11,8 @@ export class CompetitionService {
 
   constructor(private http: HttpClient) {}
 
-    getCompetitionsCount() {
-        return this.http.get<number>(this.url + '/count');
+  getCompetitionsCount() {
+    return this.http.get<number>(this.url + '/count');
   }
   getAllCompetitions(page: number, size: number): Observable<Competition[]> {
     return this.http.get<Competition[]>(
@@ -22,5 +22,11 @@ export class CompetitionService {
 
   createCompetition(competition: Competition): Observable<Competition> {
     return this.http.post<Competition>(this.url, competition);
+  }
+
+  getAllMemberCompetitions(): Observable<Competition[]> {
+    return this.http.get<Competition[]>(
+      'http://localhost:8081/api/v1/rankings/participations'
+    );
   }
 }

@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class HuntController {
     private final HuntService huntService;
 
+    @PreAuthorize("hasAuthority('CREATE_HUNT')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public HuntResponseDto save(@RequestBody @Valid HuntCreationRequestDto hunt) {

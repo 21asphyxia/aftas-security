@@ -16,9 +16,12 @@ public class AuthoritySeeder {
         List<Authority> authorities = new ArrayList<>();
         List<String> authorityNames = List.of(
                 "APPROVE_ACCOUNT",
-                "DELETE_ACCOUNT",
+                "VIEW_COMPETITION",
+                "VIEW_PARTICIPATION",
+                "VIEW_PODIUM",
                 "CREATE_COMPETITION",
-                "DELETE_COMPETITION"
+                "DELETE_COMPETITION",
+                "CREATE_HUNT"
         );
 
         authorityNames.forEach(name -> {

@@ -79,4 +79,10 @@ public class RankingServiceImpl implements RankingService {
             return rankings;
         }
     }
+
+    @Override
+    public List<Competition> findMemberParticipations(String username) {
+        List<Ranking> rankings = rankingRepository.findByMemberEmail(username);
+        return rankings.stream().map(Ranking::getCompetition).toList();
+    }
 }

@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,5 +25,11 @@ public class MemberController {
     @GetMapping("/search")
     public ResponseEntity<List<MemberResponseDto>> search(@RequestParam String query) {
         return ResponseEntity.ok(MemberResponseDto.fromMembers(memberService.search(query)));
+    }
+
+    @PreAuthorize("hasAuthority('APPROVE_ACCOUNT')")
+    @PutMapping("/{num}")
+    public ResponseEntity<MemberResponseDto> approve(@PathVariable String num) {
+        return ResponseEntity.ok(MemberResponseDto.fromMember(memberService.approve(num)));
     }
 }

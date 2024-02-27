@@ -22,4 +22,6 @@ public interface RankingRepository extends JpaRepository<Ranking, RankId> {
     List<Ranking> findByCompetitionCodeOrderByScoreDesc(String code);
 
     Integer countByCompetitionCode(String code);
+
+    List<Ranking> findByMemberEmail(String email);
 }

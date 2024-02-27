@@ -1,0 +1,41 @@
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-body>
+      <div>
+        <table cTable>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Date</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Location</th>
+              <th>Number of participants</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (competition of competitions; track $index) {
+            <tr>
+              <td>{{competition.code}}</td>
+              <td>{{competition.date}}</td>
+              <td>{{competition.startTime}}</td>
+              <td>{{competition.endTime}}</td>
+              <td>{{competition.location}}</td>
+              <td>{{competition.numberOfParticipants}}</td>
+              <td>
+                <a routerLink="{{'/podium/' + competition.code }}" cButton color="success">Podium</a>
+              </td>
+            </tr>
+            }
+            @empty {
+            <tr>
+              <td colspan="6">No competitions found</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </c-card-body>
+  </c-card>
+</c-col>

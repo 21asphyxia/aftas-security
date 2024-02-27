@@ -46,4 +46,11 @@ public class MemberServiceImpl implements MemberService {
     public List<Member> search(String query) {
         return memberRepository.findByMembershipNumberOrNameOrFamilyName(query);
     }
+
+    @Override
+    public Member approve(String num) {
+        Member member = memberRepository.findByNum(Integer.parseInt(num)).orElseThrow(() -> new ResourceNotFoundException("Member not found with num: " + num));
+        member.setEnabled(true);
+        return memberRepository.save(member);
+    }
 }

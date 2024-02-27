@@ -7,6 +7,7 @@ import com.imsouane.aftas.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class RoleSeeder {
@@ -16,19 +17,29 @@ public class RoleSeeder {
 
     public void seedRoles() {
         List<Authority> authorities = authorityRepository.findAll();
+        List<Authority> adherentAuthorities = authorities.stream()
+                .filter(authority ->
+                        authority.getName().equals("VIEW_COMPETITION") ||
+                                authority.getName().equals("VIEW_PARTICIPATION") ||
+                                authority.getName().equals("VIEW_PODIUM")
+                ).toList();
+
+        List<Authority> juryAuthorities = authorities.stream()
+                .filter(authority ->
+                        authority.getName().equals("CREATE_COMPETITION") ||
+                                authority.getName().equals("DELETE_COMPETITION") ||
+                                authority.getName().equals("CREATE_HUNT")
+                ).toList();
 
         List<Role> roles = List.of(
                 Role.builder()
                         .name("ROLE_ADHERENT")
+                        .authorities(adherentAuthorities)
                         .isDefault(true)
                         .build(),
                 Role.builder()
                         .name("ROLE_JURY")
-                        .authorities(authorities.stream()
-                                .filter(authority ->
-                                        authority.getName().equals("CREATE_COMPETITION") ||
-                                                authority.getName().equals("DELETE_COMPETITION")
-                                ).toList())
+                        .authorities(Stream.concat(adherentAuthorities.stream(), juryAuthorities.stream()).toList())
                         .isDefault(false)
                         .build(),
 

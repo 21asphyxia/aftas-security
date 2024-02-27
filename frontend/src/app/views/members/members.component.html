@@ -1,89 +1,93 @@
 <c-col xs="12">
-    <c-card class="mb-4">
-        <c-card-body>
-            <div class="d-flex justify-content-between align-items-baseline">
-                <button [cModalToggle]="memberModal.id" cButton>Add member</button>
-                <div class="mb-3">
-                    <input cFormControl #search placeholder="Search" id="search" (keyup)="onSearchChange(search.value)" />
-                </div>
-            </div>
-            <div>
-                <table cTable>
-                    <thead>
-                        <tr>
-                            <th>Number</th>
-                            <th>Full Name</th>
-                            <th>Accession date</th>
-                            <th>Nationality</th>
-                            <th>Document type</th>
-                            <th>Identity number</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (member of members; track $index) {
-                        <tr>
-                            <td>{{member.num}}</td>
-                            <td>{{member.full_name}}</td>
-                            <td>{{member.accession_date}}</td>
-                            <td>{{member.nationality}}</td>
-                            <td>{{member.identity_document_type}}</td>
-                            <td>{{member.identity_number}}</td>
-                        </tr>
-                        }
-                        @empty {
-                        <tr>
-                            <td colspan="6">No competitions found</td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </c-card-body>
-    </c-card>
+  <c-card class="mb-4">
+    <c-card-body>
+      <div class="d-flex justify-content-between align-items-baseline">
+        <button [cModalToggle]="memberModal.id" cButton>Add member</button>
+        <div class="mb-3">
+          <input cFormControl #search placeholder="Search" id="search" (keyup)="onSearchChange(search.value)" />
+        </div>
+      </div>
+      <div>
+        <table cTable>
+          <thead>
+            <tr>
+              <th>Number</th>
+              <th>Full Name</th>
+              <th>Accession date</th>
+              <th>Nationality</th>
+              <th>Document type</th>
+              <th>Identity number</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (member of members; track $index) {
+            <tr>
+              <td>{{member.num}}</td>
+              <td>{{member.full_name}}</td>
+              <td>{{member.accession_date}}</td>
+              <td>{{member.nationality}}</td>
+              <td>{{member.identity_document_type}}</td>
+              <td>{{member.identity_number}}</td>
+              <td>
+                <button (click)="approve(member.num!)" cButton color="success">Approve</button>
+              </td>
+            </tr>
+            }
+            @empty {
+            <tr>
+              <td colspan="6">No competitions found</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </c-card-body>
+  </c-card>
 </c-col>
 
 <c-modal #memberModal alignment="center" id="memberModal" scrollable>
-    <form cForm #memberForm="ngForm" (ngSubmit)="onSubmit(memberForm)">
-        <c-modal-header>
-            <h5 cModalTitle>Modal title</h5>
-            <button [cModalToggle]="memberModal.id" cButtonClose></button>
-        </c-modal-header>
-        <c-modal-body>
-            <div [cFormFloating]="true" class="mb-3">
-                <input cFormControl id="number" type="number" ngModel name="num" required />
-                <label cLabel for="number">Member Number</label>
-            </div>
-            <div [cFormFloating]="true" class="mb-3">
-                <input cFormControl id="first-name" type="text" ngModel name="name" required />
-                <label cLabel for="first-name">First Name</label>
-            </div>
-            <div [cFormFloating]="true" class="mb-3">
-                <input cFormControl id="family-name" type="text" ngModel name="familyName" required />
-                <label cLabel for="family-name">Family Name</label>
-            </div>
-            <div [cFormFloating]="true" class="mb-3">
-                <input cFormControl id="nationality" ngModel name="nationality" type="text" />
-                <label cLabel for="nationality">Nationality</label>
-            </div>
-            <div class="mb-3">
-                <label cLabel for="document-type">Document Type</label>
-                <select id="document-type" name="identityDocumentType" cSelect ngModel required>
-                    <option value="" selected>Choose document type</option>
-                    <option value="CIN">CIN</option>
-                    <option value="RESIDENCE_CARD">Residence Card</option>
-                    <option value="PASSPORT">Passport</option>
-                </select>
-            </div>
-            <div [cFormFloating]="true" class="mb-3">
-                <input cFormControl id="identity_number" ngModel name="identityNumber" type="text" />
-                <label cLabel for="identity_number">Identity Number</label>
-            </div>
-        </c-modal-body>
-        <c-modal-footer>
-            <button #closeModal [cModalToggle]="memberModal.id" cButton color="secondary">
-                Close
-            </button>
-            <button cButton color="primary" type="submit">Create</button>
-        </c-modal-footer>
-    </form>
+  <form cForm #memberForm="ngForm" (ngSubmit)="onSubmit(memberForm)">
+    <c-modal-header>
+      <h5 cModalTitle>Modal title</h5>
+      <button [cModalToggle]="memberModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <div [cFormFloating]="true" class="mb-3">
+        <input cFormControl id="number" type="number" ngModel name="num" required />
+        <label cLabel for="number">Member Number</label>
+      </div>
+      <div [cFormFloating]="true" class="mb-3">
+        <input cFormControl id="first-name" type="text" ngModel name="name" required />
+        <label cLabel for="first-name">First Name</label>
+      </div>
+      <div [cFormFloating]="true" class="mb-3">
+        <input cFormControl id="family-name" type="text" ngModel name="familyName" required />
+        <label cLabel for="family-name">Family Name</label>
+      </div>
+      <div [cFormFloating]="true" class="mb-3">
+        <input cFormControl id="nationality" ngModel name="nationality" type="text" />
+        <label cLabel for="nationality">Nationality</label>
+      </div>
+      <div class="mb-3">
+        <label cLabel for="document-type">Document Type</label>
+        <select id="document-type" name="identityDocumentType" cSelect ngModel required>
+          <option value="" selected>Choose document type</option>
+          <option value="CIN">CIN</option>
+          <option value="RESIDENCE_CARD">Residence Card</option>
+          <option value="PASSPORT">Passport</option>
+        </select>
+      </div>
+      <div [cFormFloating]="true" class="mb-3">
+        <input cFormControl id="identity_number" ngModel name="identityNumber" type="text" />
+        <label cLabel for="identity_number">Identity Number</label>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button #closeModal [cModalToggle]="memberModal.id" cButton color="secondary">
+        Close
+      </button>
+      <button cButton color="primary" type="submit">Create</button>
+    </c-modal-footer>
+  </form>
 </c-modal>

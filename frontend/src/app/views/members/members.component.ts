@@ -26,8 +26,8 @@ import { Member } from '../../models/member.model';
     ModalModule,
     ButtonModule,
     FormModule,
-      FormsModule,
-    FormFloatingDirective
+    FormsModule,
+    FormFloatingDirective,
   ],
   templateUrl: './members.component.html',
   styleUrl: './members.component.scss',
@@ -73,5 +73,16 @@ export class MembersComponent implements OnInit {
         this.members = members;
       });
     }
+  }
+
+  approve(number: number) {
+    this.memberService.approveMember(number).subscribe((member) => {
+      this.members = this.members.map((m) => {
+        if (m.num === member.num) {
+          return member;
+        }
+        return m;
+      });
+    });
   }
 }

@@ -19,4 +19,6 @@ public interface RankingService {
     Integer getCurrentNumberOfParticipants(String code);
 
     List<Ranking> findPodiumByCompetitionCode(String code);
+
+    List<Competition> findMemberParticipations(String username);
 }

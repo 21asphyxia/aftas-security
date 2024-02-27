@@ -21,4 +21,8 @@ export class MemberService {
   searchMember(name: string): Observable<Member[]> {
     return this.http.get<Member[]>(this.url + '/search?query=' + name);
   }
+
+  approveMember(num: number): Observable<Member> {
+    return this.http.put<Member>(this.url + '/' + num, {});
+  }
 }
